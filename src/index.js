@@ -1,2 +1,5 @@
-console.log("it is connected!");
+import {populate} from './populate.js';
+
+populate();
+
 import css from './style.css';
