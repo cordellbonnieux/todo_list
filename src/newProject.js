@@ -1,3 +1,4 @@
+export let projectList = [];
 // common selectors
 const projectsAdd = document.getElementById("projectsAdd");
 const overlay = document.getElementById("overlayWrapper");
@@ -7,14 +8,14 @@ function newProject(name){
     return {name : name};
 }
 // add project button
-export function addProject(projectList){
+export function addProject(){
     projectsAdd.addEventListener("click", function(){
         overlay.style.display = "block";
         newProjectFields(projects);
     })
 }
 // New Project Input Fields
-function newProjectFields(projectList){
+function newProjectFields(){
     const newProjectWrapper = document.createElement("div");
         newProjectWrapper.setAttribute("id", "newProjectWrapper");
         newProjectWrapper.style.cssText = "text-align:left;";
@@ -29,12 +30,13 @@ function newProjectFields(projectList){
             submit.value = "Add New";
             newProjectWrapper.appendChild(submit);
     overlayBox.appendChild(newProjectWrapper);
-    submitNewProject(projectList, projectName, submit);
+    submitNewProject(projectName, submit);
 }
 // submit new project
-function submitNewProject(projectList, name, submit){
+function submitNewProject(name, submit){
     submit.addEventListener('click', function(){
-        // not working
-        return projectList.push(newProject(name.value));
+        // works now that projectList is in the same file
+        let projectNew = newProject(name.value);
+        return projectList.push(projectNew), console.log(projectList);
     })
 }
