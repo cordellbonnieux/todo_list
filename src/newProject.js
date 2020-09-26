@@ -3,6 +3,7 @@ export let projectList = [];
 const projectsAdd = document.getElementById("projectsAdd");
 const overlay = document.getElementById("overlayWrapper");
 const overlayBox = document.getElementById("overlayBox");
+const projectsArea = document.getElementById("projectsArea");
 // newProject Factory
 function newProject(name){
     return {name : name};
@@ -35,8 +36,17 @@ function newProjectFields(){
 // submit new project
 function submitNewProject(name, submit){
     submit.addEventListener('click', function(){
-        // works now that projectList is in the same file
-        let projectNew = newProject(name.value);
-        return projectList.push(projectNew), console.log(projectList);
+        overlay.style.display = "none";
+        return projectList.push(newProject(name.value)),projectsAreaUpdate(), console.log(projectList);
     })
+}
+// update the projects on the DOM
+function projectsAreaUpdate(){
+    for (let i = 0;i <= projectList.length; i++){
+        const wrapper = document.createElement("div");
+            wrapper.setAttribute("class", "projectTab");
+            wrapper.textContent = projectList[i].name;
+        // add delete and edit to it next
+        projectsArea.appendChild(wrapper);
+    }
 }
