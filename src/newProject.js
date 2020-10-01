@@ -22,7 +22,15 @@ const submit = document.createElement("input");
 overlayBox.appendChild(newProjectWrapper);
     // leave the fields off by default
     newProjectWrapper.style.display = "none";
-
+// mouse hover function
+function mouseHover(target){
+    target.addEventListener('mouseenter', function(){
+        target.style.textDecoration = "underline";
+    })
+    target.addEventListener('mouseleave', function(){
+        target.style.textDecoration = "none";
+    })
+}
 // add project button
 export function addProject(){
     projectsAdd.addEventListener("click", function(){
@@ -30,13 +38,7 @@ export function addProject(){
         newProjectWrapper.style.display = "block";
         projectName.value = "";
     })
-        // add project button hover
-        projectsAdd.addEventListener("mouseenter", function(){
-            projectsAdd.style.textDecoration = "underline";
-        })
-        projectsAdd.addEventListener("mouseleave", function(){
-            projectsAdd.style.textDecoration = "none";
-        })
+    mouseHover(projectsAdd);
 }
 // newProject Factory
 function newProject(name){
@@ -46,7 +48,7 @@ function newProject(name){
 submit.addEventListener('click', function(){
     overlay.style.display = "none";
     projectList.push(newProject(projectName.value));
-    //projectsAreaUpdate();
+    projectsAreaUpdate();
     console.log(projectList);
 })
 // update the projects list in the projects area on the DOM
@@ -56,8 +58,18 @@ function projectsAreaUpdate(){
     for (let i = 0;i <= projectList.length; i++){
         const wrapper = document.createElement("div");
             wrapper.setAttribute("class", "projectTab");
-            wrapper.textContent = `${projectList[i].name}`;
+            wrapper.textContent = projectList[i].name;
         // add delete and edit to it next
+            const del = document.createElement("span");
+            del.setAttribute("class", "deleteProject");
+                del.textContent = "delete";
+                del.addEventListener('click', function(){
+                    projectList.splice([i],1);
+                    projectsAreaUpdate();
+                })
+                mouseHover(del);
+                wrapper.appendChild(del);
+        //
         projectsArea.appendChild(wrapper);
     }
 }
