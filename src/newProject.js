@@ -4,7 +4,6 @@ const projectsAdd = document.getElementById("projectsAdd");
 const overlay = document.getElementById("overlayWrapper");
 const overlayBox = document.getElementById("overlayBox");
 const projectsArea = document.getElementById("projectsArea");
-const cancel = document.getElementById("cancel");
 // Add fields to  the overlay box
 const newProjectWrapper = document.createElement("div");
 newProjectWrapper.setAttribute("id", "newProjectWrapper");
@@ -14,10 +13,12 @@ const projectTitle = document.createElement("h3");
     newProjectWrapper.appendChild(projectTitle);
 const projectName = document.createElement("input");
     projectName.type = "text";
+    projectName.setAttribute('class', 'textField');
     newProjectWrapper.appendChild(projectName);
 const submit = document.createElement("input");
     submit.type = "submit";
     submit.value = "Add New";
+    submit.setAttribute('class', 'button');
     newProjectWrapper.appendChild(submit);
 overlayBox.appendChild(newProjectWrapper);
     // leave the fields off by default
@@ -46,10 +47,10 @@ function newProject(name){
 }
 // submit button / submit a new project name
 submit.addEventListener('click', function(){
+    newProjectWrapper.style.display = "none";
     overlay.style.display = "none";
     projectList.push(newProject(projectName.value));
     projectsAreaUpdate();
-    console.log(projectList);
 })
 // update the projects list in the projects area on the DOM
 // this below needs to be fixed so i dont get the e error!
@@ -59,17 +60,50 @@ function projectsAreaUpdate(){
         const wrapper = document.createElement("div");
             wrapper.setAttribute("class", "projectTab");
             wrapper.textContent = projectList[i].name;
-        // add delete and edit to it next
-            const del = document.createElement("span");
+        // add edit
+        const edit = document.createElement("span");
+            edit.setAttribute("class", "editProject");
+            edit.textContent = "edit";
+            edit.addEventListener('click', function(){
+                overlay.style.display = "block";
+                editProjectName(projectList[i]);
+                console.log(projectList[i]);
+            })
+            mouseHover(edit);
+            wrapper.appendChild(edit);
+        // add delete
+        const del = document.createElement("span");
             del.setAttribute("class", "deleteProject");
-                del.textContent = "delete";
-                del.addEventListener('click', function(){
-                    projectList.splice([i],1);
-                    projectsAreaUpdate();
-                })
-                mouseHover(del);
-                wrapper.appendChild(del);
+            del.textContent = "delete";
+            del.addEventListener('click', function(){
+                projectList.splice([i],1);
+                projectsAreaUpdate();
+            })
+            mouseHover(del);
+            wrapper.appendChild(del);
         //
         projectsArea.appendChild(wrapper);
     }
+}
+function editProjectName(project){
+    const wrapper = document.createElement("div");
+    overlayBox.appendChild(wrapper);
+    const enterNew = document.createElement('h3');
+        enterNew.textContent = "enter a new project name";
+        wrapper.appendChild(enterNew);
+    const enterName = document.createElement("input");
+        enterName.type = "text";
+        enterName.setAttribute('class', 'textField');
+        wrapper.appendChild(enterName);
+    const submitName = document.createElement("input");
+        submitName.type = "submit";
+        submitName.setAttribute('class', 'button');
+        wrapper.appendChild(submitName);
+        submitName.addEventListener('click', function(){
+            project.name = enterName.value;
+            console.log(`it got to here and this is the ref: ${project.name}`);
+            wrapper.style.display = "none";
+            overlay.style.display = "none";
+            projectsAreaUpdate();
+        })
 }
