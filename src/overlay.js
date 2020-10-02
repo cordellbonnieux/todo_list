@@ -1,3 +1,4 @@
+import {mouseHover} from './newProject.js';
 export function cancelOverlay(){
     const cancel = document.getElementById("cancel");
     const overlay = document.getElementById("overlayWrapper");
@@ -5,11 +6,5 @@ export function cancelOverlay(){
     cancel.addEventListener("click", function(){
         overlay.style.display = "none";
     })
-        // x hover effects
-        cancel.addEventListener("mouseenter", function(){
-            cancel.style.textDecoration = "underline";
-        })
-        cancel.addEventListener("mouseleave", function(){
-            cancel.style.textDecoration = "none";
-        })
+    mouseHover(cancel);
 }

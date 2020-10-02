@@ -1,5 +1,4 @@
 import { populateTasksArea } from "./tasks";
-
 export let projectList = [];
 // page selectors
 const projectsAdd = document.getElementById("projectsAdd");
@@ -29,6 +28,7 @@ overlayBox.appendChild(newProjectWrapper);
 export function mouseHover(target){
     target.addEventListener('mouseenter', function(){
         target.style.textDecoration = "underline";
+        target.style.cursor = "pointer";
     })
     target.addEventListener('mouseleave', function(){
         target.style.textDecoration = "none";
