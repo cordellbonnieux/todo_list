@@ -1,3 +1,5 @@
+import { populateTasksArea } from "./tasks";
+
 export let projectList = [];
 // page selectors
 const projectsAdd = document.getElementById("projectsAdd");
@@ -24,7 +26,7 @@ overlayBox.appendChild(newProjectWrapper);
     // leave the fields off by default
     newProjectWrapper.style.display = "none";
 // mouse hover function
-function mouseHover(target){
+export function mouseHover(target){
     target.addEventListener('mouseenter', function(){
         target.style.textDecoration = "underline";
     })
@@ -61,6 +63,10 @@ function projectsAreaUpdate(){
         const wrapper = document.createElement("div");
             wrapper.setAttribute("class", "projectTab");
             wrapper.textContent = projectList[i].name;
+            wrapper.addEventListener('click', function(){
+                populateTasksArea(projectList[i])
+                return
+            })
         // add edit
         const edit = document.createElement("span");
             edit.setAttribute("class", "editProject");
