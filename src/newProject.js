@@ -51,6 +51,7 @@ submit.addEventListener('click', function(){
     overlay.style.display = "none";
     projectList.push(newProject(projectName.value));
     projectsAreaUpdate();
+    return
 })
 // update the projects list in the projects area on the DOM
 // this below needs to be fixed so i dont get the e error!
@@ -67,7 +68,6 @@ function projectsAreaUpdate(){
             edit.addEventListener('click', function(){
                 overlay.style.display = "block";
                 editProjectName(projectList[i]);
-                console.log(projectList[i]);
             })
             mouseHover(edit);
             wrapper.appendChild(edit);
@@ -83,6 +83,7 @@ function projectsAreaUpdate(){
             wrapper.appendChild(del);
         //
         projectsArea.appendChild(wrapper);
+        return
     }
 }
 function editProjectName(project){
@@ -101,9 +102,10 @@ function editProjectName(project){
         wrapper.appendChild(submitName);
         submitName.addEventListener('click', function(){
             project.name = enterName.value;
-            console.log(`it got to here and this is the ref: ${project.name}`);
             wrapper.style.display = "none";
             overlay.style.display = "none";
             projectsAreaUpdate();
         })
+        // if x is clicked, i'll need to be able to turn off this wrapper!
+    return
 }
