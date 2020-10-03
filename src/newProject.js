@@ -1,5 +1,5 @@
 import { populateTasksArea } from "./tasks";
-export let projectList = [];
+export const projectList = [];
 // page selectors
 const projectsAdd = document.getElementById("projectsAdd");
 const overlay = document.getElementById("overlayWrapper");
@@ -45,28 +45,31 @@ export function addProject(){
 }
 // newProject Factory
 function newProject(name){
-    return {name : name};
+    return {name : name,
+    tasks: [],};
 }
 // submit button / submit a new project name
 submit.addEventListener('click', function(){
     newProjectWrapper.style.display = "none";
     overlay.style.display = "none";
-    projectList.push(newProject(projectName.value));
-    projectsAreaUpdate();
-    return
+    let createNewProject = newProject(projectName.value);
+    return projectList.push(createNewProject),projectsAreaUpdate();
 })
 // update the projects list in the projects area on the DOM
 // this below needs to be fixed so i dont get the e error!
 function projectsAreaUpdate(){
     projectsArea.innerHTML = "";
-    for (let i = 0;i <= projectList.length; i++){
+    for (let i = 0;i < projectList.length; i++){
         const wrapper = document.createElement("div");
             wrapper.setAttribute("class", "projectTab");
-            wrapper.textContent = projectList[i].name;
-            wrapper.addEventListener('click', function(){
+            let projectTitleLink = document.createElement('h3');
+            projectTitleLink.textContent = projectList[i].name;
+            projectTitleLink.addEventListener('click', function(){
                 populateTasksArea(projectList[i])
                 return
             })
+            mouseHover(projectTitleLink);
+            wrapper.appendChild(projectTitleLink);
         // add edit
         const edit = document.createElement("span");
             edit.setAttribute("class", "editProject");

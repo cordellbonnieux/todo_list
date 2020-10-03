@@ -6,12 +6,12 @@ export function cancelOverlay(){
     cancel.addEventListener("click", function(){
         overlay.style.display = "none";
         // exit out all other displays -- below needs to be improved
-        const taskWrap = document.getElementById('newTaskWrapper');
-            taskWrap.style.display = "none";
-        const projWrap = document.getElementById('newProjectWrapper');
-            projWrap.style.display = "none";
-        const editProjWrap = document.getElementById('editProjectWrapper');
-            editProjWrap.style.display = "none";
+        //const taskWrap = document.getElementById('newTaskWrapper');
+            //taskWrap.style.display = "none";
+        //const projWrap = document.getElementById('newProjectWrapper');
+            //projWrap.style.display = "none";
+        //const editProjWrap = document.getElementById('editProjectWrapper');
+            //editProjWrap.style.display = "none";
     })
     mouseHover(cancel);
 }

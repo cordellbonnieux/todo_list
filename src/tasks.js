@@ -49,7 +49,6 @@ export function populateTasksArea(project){
     return
 }
 export function createNewTask(project){
-    projectList.forEach(name => name.tasks = []);
     const overlayWrapper = document.getElementById("overlayWrapper");
     overlayWrapper.style.display = "block";
     const overlayBox = document.getElementById("overlayBox"); // might need to change the name
@@ -123,18 +122,20 @@ export function createNewTask(project){
             } else {
                 console.log('.checked didnt work!');
             }
-            project.tasks.push({title: taskTitle.value,
-            description: taskDescription.value,
-            dueDate: taskDueDate.value,
-            priority: taskPriority});
-            newTaskWrapper.style.display = "none";
-            overlayWrapper.style.display = "none";
+            let newTask = taskFactory(taskTitle.value,taskDescription.value,taskDueDate.value,taskPriority);
+            project.tasks.push(newTask);
             populateTasksArea(project);
+            newTaskWrapper.style.display = "none", newTaskWrapper.innerHTML = "";
+            overlayWrapper.style.display = "none";
             return
         })
-    // submit info into projectList[i].task.etc
-    // eg project.tasks.push(example)
-    // display in flex box
     return
+}
+// Task Factory
+function taskFactory(title,description,dueDate,priority){
+    return {title: title,
+    description: description,
+    dueDate: dueDate,
+    priority: priority,}
 }
 
