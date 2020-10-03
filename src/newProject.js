@@ -94,6 +94,7 @@ function projectsAreaUpdate(){
 }
 function editProjectName(project){
     const wrapper = document.createElement("div");
+        wrapper.setAttribute('id', 'editProjectWrapper');
     overlayBox.appendChild(wrapper);
     const enterNew = document.createElement('h3');
         enterNew.textContent = "enter a new project name";
