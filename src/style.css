@@ -1,8 +1,14 @@
 body{
     text-transform: lowercase;
+    background-color:#F6F5F4;
+    color:#06080E;
+}
+a{
+    transition:0.2s;
 }
 a:hover{
     text-decoration:underline;
+    color:#DB2B39;
 }
 #overlayWrapper{
     display:none;
@@ -25,4 +31,22 @@ a:hover{
             display:inline-block;
             margin:4px 8px;
         }
+/* projects area */
+#projectTitleWrapper{
 
+}
+    #projectsTitleWrapper div{
+        display:inline-block;
+        margin-right:10px;
+    }
+#projects{
+    padding:0 16px;
+}
+    #projects #projectsArea{
+        display:flex;
+        flex-wrap:wrap;
+    }
+
+            #projects #projectArea .projectTab span{
+                margin:0 3px;
+            }

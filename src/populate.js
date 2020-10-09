@@ -1,3 +1,4 @@
+import { mouseHover } from "./newProject";
 export function populate(){
     const titleBar = document.getElementById("titleBar");
         const pageTitle = document.createElement("h1");
@@ -12,5 +13,6 @@ export function populate(){
     const projectsAdd = document.getElementById("projectsAdd");
         const add = document.createElement("span");
             add.textContent = "Add";
-        projectsAdd.appendChild(add);   
+        projectsAdd.appendChild(add);
+        mouseHover(add);   
 };

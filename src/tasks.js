@@ -6,7 +6,7 @@ export function populateTasksArea(project){
     const flexBox = document.createElement("div");
         tasksWrapper.appendChild(flexBox);
         flexBox.setAttribute("id", "flexBox");
-        flexBox.style.display = "flex";
+        flexBox.style.cssText = "display:flex; flex-wrap:wrap;";
         const newTaskBtn = document.createElement('span');
             tasksWrapper.prepend(newTaskBtn);
             newTaskBtn.setAttribute('id', 'newTaskBtn');
@@ -16,6 +16,10 @@ export function populateTasksArea(project){
                 return
             })
             mouseHover(newTaskBtn);
+        const projectNameTaskArea = document.createElement('h3');
+            tasksWrapper.prepend(projectNameTaskArea);
+            projectNameTaskArea.textContent = `${project.name}'s tasks`;
+            projectNameTaskArea.style.display = "inline-block";
     if (project.tasks){
         for (let i = 0; i < project.tasks.length; i++){
             const taskBox = document.createElement('div');

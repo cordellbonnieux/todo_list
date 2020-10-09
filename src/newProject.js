@@ -37,9 +37,11 @@ export function mouseHover(target){
     target.addEventListener('mouseenter', function(){
         target.style.textDecoration = "underline";
         target.style.cursor = "pointer";
+        target.style.color = "#DB2B39";
     })
     target.addEventListener('mouseleave', function(){
         target.style.textDecoration = "none";
+        target.style.color = "#06080E";
     })
 }
 // add project button
@@ -62,33 +64,51 @@ function projectsAreaUpdate(){
         const wrapper = document.createElement("div");
         projectsArea.appendChild(wrapper);
             wrapper.setAttribute("class", "projectTab");
-            let projectTitleLink = document.createElement('h3');
+            wrapper.style.cssText = "padding:10px; background-color:#fff; box-shadow:4px 4px; margin:10px;";
+        
+        let projectTitleLinkWrapper = document.createElement('div');
+            wrapper.appendChild(projectTitleLinkWrapper);
+            projectTitleLinkWrapper.setAttribute('class', 'projectTitleWrapper');
+            projectTitleLinkWrapper.style.cssText = "display:inline-block; margin-right:20px";
+            
+
+        let projectTitleLink = document.createElement('h3');
+            projectTitleLinkWrapper.appendChild(projectTitleLink);
             projectTitleLink.textContent = projectList[i].name;
+            projectTitleLink.style.cssText = "margin:0 0 0 4px; font-size:16px;";
             projectTitleLink.addEventListener('click', function(){
                 populateTasksArea(projectList[i])
             })
             mouseHover(projectTitleLink);
-            wrapper.appendChild(projectTitleLink);
+            
+        let editDeleteWrapper = document.createElement('div');
+            wrapper.appendChild(editDeleteWrapper);
+            editDeleteWrapper.setAttribute('class', 'editDeleteProjectWrapper');
+            editDeleteWrapper.style.cssText = "display:inline-block; font-size:10px;";
+
         // add edit
         const edit = document.createElement("span");
+            editDeleteWrapper.appendChild(edit);
             edit.setAttribute("class", "editProject");
             edit.textContent = "edit";
+            edit.style.margin = "0 3px";
             edit.addEventListener('click', function(){
                 overlay.style.display = "block";
                 editProjectName(projectList[i]);
             })
             mouseHover(edit);
-            wrapper.appendChild(edit);
+            
         // add delete
         const del = document.createElement("span");
+            editDeleteWrapper.appendChild(del);
             del.setAttribute("class", "deleteProject");
             del.textContent = "delete";
+            del.style.margin = "0 3px";
             del.addEventListener('click', function(){
                 projectList.splice([i],1);
                 projectsAreaUpdate();
             })
             mouseHover(del);
-            wrapper.appendChild(del);
     }
 }
 function editProjectName(project){
