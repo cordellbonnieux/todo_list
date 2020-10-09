@@ -53,20 +53,25 @@ submit.addEventListener('click', function(){
     newProjectWrapper.style.display = "none";
     overlay.style.display = "none";
     let createNewProject = newProject(projectName.value);
-    return projectList.push(createNewProject),projectsAreaUpdate();
+    projectList.push(createNewProject);
+    projectsAreaUpdate();
+    return
 })
 // update the projects list in the projects area on the DOM
-// this below needs to be fixed so i dont get the e error!
 function projectsAreaUpdate(){
+    console.log('projectsAreaUpdate fired off!');
     projectsArea.innerHTML = "";
-    for (let i = 0;i < projectList.length; i++){
+    for (let i = 0; i < projectList.length; i++){
         const wrapper = document.createElement("div");
+        projectsArea.appendChild(wrapper);
+        console.log(projectList);
+        console.log(projectList.length);
+        console.log('wrapper created');
             wrapper.setAttribute("class", "projectTab");
             let projectTitleLink = document.createElement('h3');
             projectTitleLink.textContent = projectList[i].name;
             projectTitleLink.addEventListener('click', function(){
                 populateTasksArea(projectList[i])
-                return
             })
             mouseHover(projectTitleLink);
             wrapper.appendChild(projectTitleLink);
@@ -91,8 +96,7 @@ function projectsAreaUpdate(){
             mouseHover(del);
             wrapper.appendChild(del);
         //
-        projectsArea.appendChild(wrapper);
-        return
+        console.log('wrapper added');
     }
 }
 function editProjectName(project){
