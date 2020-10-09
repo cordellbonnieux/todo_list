@@ -5,25 +5,33 @@ const projectsAdd = document.getElementById("projectsAdd");
 const overlay = document.getElementById("overlayWrapper");
 const overlayBox = document.getElementById("overlayBox");
 const projectsArea = document.getElementById("projectsArea");
-// Add fields to  the overlay box
-const newProjectWrapper = document.createElement("div");
-newProjectWrapper.setAttribute("id", "newProjectWrapper");
-newProjectWrapper.style.cssText = "text-align:left;";
-const projectTitle = document.createElement("h3");
-    projectTitle.textContent = "Add A New Project Name"
-    newProjectWrapper.appendChild(projectTitle);
-const projectName = document.createElement("input");
-    projectName.type = "text";
-    projectName.setAttribute('class', 'textField');
-    newProjectWrapper.appendChild(projectName);
-const submit = document.createElement("input");
-    submit.type = "submit";
-    submit.value = "Add New";
-    submit.setAttribute('class', 'button');
-    newProjectWrapper.appendChild(submit);
-overlayBox.appendChild(newProjectWrapper);
-    // leave the fields off by default
-    newProjectWrapper.style.display = "none";
+export function createAddProject(){
+    const newProjectWrapper = document.createElement("div");
+    newProjectWrapper.setAttribute("id", "newProjectWrapper");
+    newProjectWrapper.style.cssText = "text-align:left;";
+    const projectTitle = document.createElement("h3");
+        projectTitle.textContent = "Add A New Project Name"
+        newProjectWrapper.appendChild(projectTitle);
+    const projectName = document.createElement("input");
+        projectName.type = "text";
+        projectName.setAttribute('class', 'textField');
+        newProjectWrapper.appendChild(projectName);
+    const submit = document.createElement("input");
+        submit.type = "submit";
+        submit.value = "Add New";
+        submit.setAttribute('class', 'button');
+        newProjectWrapper.appendChild(submit);
+    overlayBox.appendChild(newProjectWrapper);
+    // submit button / submit a new project name
+    submit.addEventListener('click', function(){
+        let createNewProject = newProject(projectName.value);
+        projectList.push(createNewProject);
+        projectsAreaUpdate();
+        overlayBox.innerHTML = "";
+        overlay.style.display = "none";
+        return
+    })
+}
 // mouse hover function
 export function mouseHover(target){
     target.addEventListener('mouseenter', function(){
@@ -38,8 +46,7 @@ export function mouseHover(target){
 export function addProject(){
     projectsAdd.addEventListener("click", function(){
         overlay.style.display = "block";
-        newProjectWrapper.style.display = "block";
-        projectName.value = "";
+        createAddProject();
     })
     mouseHover(projectsAdd);
 }
@@ -48,25 +55,12 @@ function newProject(name){
     return {name : name,
     tasks: [],};
 }
-// submit button / submit a new project name
-submit.addEventListener('click', function(){
-    newProjectWrapper.style.display = "none";
-    overlay.style.display = "none";
-    let createNewProject = newProject(projectName.value);
-    projectList.push(createNewProject);
-    projectsAreaUpdate();
-    return
-})
 // update the projects list in the projects area on the DOM
 function projectsAreaUpdate(){
-    console.log('projectsAreaUpdate fired off!');
     projectsArea.innerHTML = "";
     for (let i = 0; i < projectList.length; i++){
         const wrapper = document.createElement("div");
         projectsArea.appendChild(wrapper);
-        console.log(projectList);
-        console.log(projectList.length);
-        console.log('wrapper created');
             wrapper.setAttribute("class", "projectTab");
             let projectTitleLink = document.createElement('h3');
             projectTitleLink.textContent = projectList[i].name;
@@ -95,8 +89,6 @@ function projectsAreaUpdate(){
             })
             mouseHover(del);
             wrapper.appendChild(del);
-        //
-        console.log('wrapper added');
     }
 }
 function editProjectName(project){
@@ -116,7 +108,7 @@ function editProjectName(project){
         wrapper.appendChild(submitName);
         submitName.addEventListener('click', function(){
             project.name = enterName.value;
-            wrapper.style.display = "none";
+            overlayBox.innerHTML = "";
             overlay.style.display = "none";
             projectsAreaUpdate();
         })

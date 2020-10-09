@@ -13,7 +13,7 @@ a:hover{
     height: 100%;
     background-color: rgba(000, 000, 000, 0.5);
 }
-    #overlayBox{
+    #overlayInner{
         display:block;
         max-width:330px;
         border:1px solid #000;
