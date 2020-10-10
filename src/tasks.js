@@ -20,10 +20,11 @@ export function populateTasksArea(project){
             tasksWrapper.prepend(projectNameTaskArea);
             projectNameTaskArea.textContent = `${project.name}'s tasks`;
             projectNameTaskArea.style.display = "inline-block";
-    if (project.tasks){
+    if (project.tasks.length > 0){
         for (let i = 0; i < project.tasks.length; i++){
             const taskBox = document.createElement('div');
                 taskBox.setAttribute('class', 'task');
+                taskBox.style.cssText = "max-width: 300px; border:1px solid #000; padding:10px; background-color:#fff; box-shadow:4px 4px; margin:10px; color:#000;";
                 flexBox.appendChild(taskBox);
             let title = document.createElement('h4');
                 title.textContent = project.tasks[i].title;
@@ -33,31 +34,48 @@ export function populateTasksArea(project){
                 taskBox.appendChild(description);
             let dueDate = document.createElement('span');
                 dueDate.textContent = project.tasks[i].dueDate;
+                dueDate.prepend('due date: ');
+                dueDate.style.display = "block";
                 taskBox.appendChild(dueDate);
             let priority = document.createElement('span');
                 priority.textContent = project.tasks[i].priority;
                 taskBox.appendChild(priority);
+                priority.prepend('priority: ');
+                priority.style.display = "block";
+
+            const modifyWrapper = document.createElement('div');
+                modifyWrapper.style.textAlign = "right";
+                taskBox.appendChild(modifyWrapper);
             let editTask = document.createElement('span');
                 editTask.textContent = "edit";
+                editTask.style.fontSize = "10px";
+                editTask.style.margin = "0 3px";
                 editTask.addEventListener('click', function(){
                     editSelectedTask(project.tasks[i], project);
                     populateTasksArea(project);
                     return
                 })
                 mouseHover(editTask);
-                taskBox.appendChild(editTask);
+                modifyWrapper.appendChild(editTask);
             let deleteTask = document.createElement('span');
                 deleteTask.textContent = "delete";
+                deleteTask.style.fontSize = "10px";
+                deleteTask.style.margin = "0 3px";
                 deleteTask.addEventListener('click', function(){
                     project.tasks.splice([i], 1);
                     populateTasksArea(project);
                     return
                 })
                 mouseHover(deleteTask);
-                taskBox.appendChild(deleteTask);
+                modifyWrapper.appendChild(deleteTask);
         }
     } else {
-        return
+        const taskPromptWrapper = document.createElement('div');
+            taskPromptWrapper.style.cssText = "";
+            flexBox.appendChild(taskPromptWrapper);
+        const taskPromptText = document.createElement('p');
+            taskPromptText.textContent = `To add a task to this project, click the 'add task' text above!`;
+            taskPromptWrapper.appendChild(taskPromptText);
     }
     return
 }

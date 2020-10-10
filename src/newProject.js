@@ -64,8 +64,8 @@ function projectsAreaUpdate(){
         const wrapper = document.createElement("div");
         projectsArea.appendChild(wrapper);
             wrapper.setAttribute("class", "projectTab");
-            wrapper.style.cssText = "padding:10px; background-color:#fff; box-shadow:4px 4px; margin:10px;";
-        
+            wrapper.style.cssText = "border:1px solid #000; padding:10px; background-color:#fff; box-shadow:4px 4px; margin:10px; color:#000;";
+
         let projectTitleLinkWrapper = document.createElement('div');
             wrapper.appendChild(projectTitleLinkWrapper);
             projectTitleLinkWrapper.setAttribute('class', 'projectTitleWrapper');
