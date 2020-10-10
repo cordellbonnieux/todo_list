@@ -8,18 +8,21 @@ const projectsArea = document.getElementById("projectsArea");
 export function createAddProject(){
     const newProjectWrapper = document.createElement("div");
     newProjectWrapper.setAttribute("id", "newProjectWrapper");
-    newProjectWrapper.style.cssText = "text-align:left;";
+    newProjectWrapper.style.cssText = "text-align:center;";
     const projectTitle = document.createElement("h3");
         projectTitle.textContent = "Add A New Project Name"
+        projectTitle.style.fontSize = "16px";
         newProjectWrapper.appendChild(projectTitle);
     const projectName = document.createElement("input");
         projectName.type = "text";
+        overlayInputFields(projectName);
         projectName.setAttribute('class', 'textField');
         newProjectWrapper.appendChild(projectName);
     const submit = document.createElement("input");
         submit.type = "submit";
         submit.value = "Add New";
         submit.setAttribute('class', 'button');
+        mouseHoverOverlay(submit);
         newProjectWrapper.appendChild(submit);
     overlayBox.appendChild(newProjectWrapper);
     // submit button / submit a new project name
@@ -44,13 +47,46 @@ export function mouseHover(target){
         target.style.color = "#06080E";
     })
 }
+// mouse hover function for headings
+export function mouseHoverHeading(target){
+    target.style.cssText = "transition:0.7s; color:#fff; border:1px solid #fff; padding:2px; background-color:#000;"
+    target.addEventListener('mouseenter', function(){
+        target.style.cursor = "pointer";
+        target.style.color = "#000";
+        target.style.backgroundColor = "#fff"
+        target.textDecoration = "none";
+    })
+    target.addEventListener('mouseleave', function(){
+        target.style.color = "#fff";
+        target.style.backgroundColor = "#000";
+        target.textDecoration = "none";
+    })
+}
+// mouse hover function for overlay submit buttons
+export function mouseHoverOverlay(target){
+target.style.cssText = "display:block; transition:0.3s; font-weight:600; border-radius:0; background-color:#000; margin:10px auto; color:#fff; padding:4px 10px; border:1px solid #000;";
+target.addEventListener('mouseenter', function(){
+    target.style.cursor = "pointer";
+    target.style.color = "#000";
+    target.style.backgroundColor = "#fff"
+    target.textDecoration = "none";
+})
+target.addEventListener('mouseleave', function(){
+    target.style.color = "#fff";
+    target.style.backgroundColor = "#000";
+    target.textDecoration = "none";
+})
+}
+// overlay input field styles
+export function overlayInputFields(input){
+    input.style.cssText ="display:block; padding:4px 8px; margin: 10px auto; width: 200px; border-radius: 0; box-shadow: 2px 2px; border: 1px solid #000; height: 20px;";
+}
 // add project button
 export function addProject(){
     projectsAdd.addEventListener("click", function(){
         overlay.style.display = "block";
         createAddProject();
     })
-    mouseHover(projectsAdd);
 }
 // newProject Factory
 function newProject(name){
@@ -117,14 +153,18 @@ function editProjectName(project){
     overlayBox.appendChild(wrapper);
     const enterNew = document.createElement('h3');
         enterNew.textContent = "enter a new project name";
+        enterNew.style.fontSize = "16px";
         wrapper.appendChild(enterNew);
     const enterName = document.createElement("input");
         enterName.type = "text";
+        overlayInputFields(enterName);
         enterName.setAttribute('class', 'textField');
         wrapper.appendChild(enterName);
     const submitName = document.createElement("input");
         submitName.type = "submit";
+        submitName.value = "Add New";
         submitName.setAttribute('class', 'button');
+        mouseHoverOverlay(submitName);
         wrapper.appendChild(submitName);
         submitName.addEventListener('click', function(){
             project.name = enterName.value;
@@ -132,6 +172,4 @@ function editProjectName(project){
             overlay.style.display = "none";
             projectsAreaUpdate();
         })
-        // if x is clicked, i'll need to be able to turn off this wrapper!
-    return
 }

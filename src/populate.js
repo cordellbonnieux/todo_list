@@ -1,4 +1,4 @@
-import { mouseHover } from "./newProject";
+import { mouseHover, mouseHoverHeading } from "./newProject";
 export function populate(){
     const titleBar = document.getElementById("titleBar");
         const pageTitle = document.createElement("h1");
@@ -14,8 +14,8 @@ export function populate(){
 
     const projectsAdd = document.getElementById("projectsAdd");
         const add = document.createElement("span");
-            add.textContent = "Add";
-            add.style.color = "#fff";
+            add.textContent = "add";
+            mouseHoverHeading(add);
 
         projectsAdd.appendChild(add);
 

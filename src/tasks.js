@@ -1,4 +1,4 @@
-import {mouseHover} from './newProject.js';
+import {mouseHover, mouseHoverHeading, overlayInputFields, mouseHoverOverlay} from './newProject.js';
 import {projectList} from './newProject.js';
 export function populateTasksArea(project){
     const tasksWrapper = document.getElementById("tasksWrapper");
@@ -16,7 +16,7 @@ export function populateTasksArea(project){
                 createNewTask(project);
                 return
             })
-            mouseHover(newTaskBtn);
+            mouseHoverHeading(newTaskBtn);
         const projectNameTaskArea = document.createElement('h3');
             tasksWrapper.prepend(projectNameTaskArea);
             projectNameTaskArea.textContent = `${project.name}'s tasks`;
@@ -89,10 +89,12 @@ export function createNewTask(project){
     // create overlay menu
     const newTaskWrapper = document.createElement('div');
         newTaskWrapper.setAttribute('id', 'newTaskWrapper');
+        newTaskWrapper.style.fontSize = "12px";
         overlayBox.appendChild(newTaskWrapper);
         // make the input form then submit the data.
     const createANewTask = document.createElement('h3');
         createANewTask.textContent = "create a new task";
+        createANewTask.style.fontSize = "16px";
         newTaskWrapper.appendChild(createANewTask);
     const taskTitleLabel = document.createElement('label');
         taskTitleLabel.for = "taskTitle";
@@ -101,6 +103,7 @@ export function createNewTask(project){
     const taskTitle = document.createElement('input');
         taskTitle.type = "text";
         taskTitle.setAttribute('id', 'taskTitle');
+        overlayInputFields(taskTitle);
         newTaskWrapper.appendChild(taskTitle);
     const taskDescriptionLabel = document.createElement('label');
         taskDescriptionLabel.for = "taskDescription";
@@ -109,6 +112,7 @@ export function createNewTask(project){
     const taskDescription = document.createElement('input');
         taskDescription.type = "textarea";
         taskDescription.setAttribute('id', 'taskDescription');
+        overlayInputFields(taskDescription);
         newTaskWrapper.appendChild(taskDescription);
 
     const taskDueDateLabel = document.createElement('label');
@@ -118,6 +122,8 @@ export function createNewTask(project){
     const taskDueDate = document.createElement('input');
         taskDueDate.setAttribute('id', 'taskDueDate');
         taskDueDate.type = "date";
+        overlayInputFields(taskDueDate);
+        taskDueDate.style.width = "auto";
         newTaskWrapper.appendChild(taskDueDate);
     const taskPriorityLabel = document.createElement('p');
         taskPriorityLabel.textContent = "task priority";
@@ -127,24 +133,42 @@ export function createNewTask(project){
         taskPriorityLow.setAttribute('id', 'taskPriorityLow');
         taskPriorityLow.value = "low";
         taskPriorityLow.name = "priority";
+
+        const lowLabel = document.createElement('label');
+            lowLabel.for = "low";
+            lowLabel.textContent = "low:";
+        taskPriorityLow.prepend(lowLabel);
+
         newTaskWrapper.appendChild(taskPriorityLow);
     const taskPriorityMedium = document.createElement('input');
         taskPriorityMedium.type = "radio";
         taskPriorityMedium.setAttribute('id', 'taskPriorityMedium');
         taskPriorityMedium.value = "medium";
         taskPriorityMedium.name = "priority";
+
+        const mediumLabel = document.createElement('label');
+            mediumLabel.for = "medium";
+            mediumLabel.textContent = "medium:";
+        taskPriorityMedium.prepend(mediumLabel);
+
         newTaskWrapper.appendChild(taskPriorityMedium);
     const taskPriorityHigh = document.createElement('input');
         taskPriorityHigh.type = "radio";
         taskPriorityHigh.setAttribute('id', 'taskPriorityHigh');
         taskPriorityHigh.value = "high";
         taskPriorityHigh.name = "priority";
+
+        const highLabel = document.createElement('label');
+            highLabel.for = "high";
+            highLabel.textContent = "high:";
+        taskPriorityHigh.prepend(highLabel);
+        
         newTaskWrapper.appendChild(taskPriorityHigh);
 
     const taskSubmit = document.createElement('input');
         taskSubmit.type = 'submit';
         newTaskWrapper.appendChild(taskSubmit);
-
+        mouseHoverOverlay(taskSubmit);
         taskSubmit.addEventListener('click', function(){
             let taskPriority = "";
             if (taskPriorityLow.checked){

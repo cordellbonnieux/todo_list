@@ -7,10 +7,6 @@ a{
     transition:0.2s;
     color:#000;
 }
-a:hover{
-    text-decoration:underline;
-    color:#DB2B39;
-}
 #contentWrapper{
     border:1px solid #000;
     box-shadow:4px 4px;
@@ -39,16 +35,20 @@ a:hover{
 }
     #overlayInner{
         display:block;
-        max-width:330px;
+        width:300px;
         border:1px solid #000;
         margin:100px auto;
         background:#fff;
         text-align:right;
+        padding:10px;
     }
         #cancel{
             display:inline-block;
             margin:4px 8px;
         }
+    #overlayBox{
+        text-align:center;
+    }
 /* projects area */
 #projectsWrapper{
     padding:10px;
@@ -72,13 +72,9 @@ a:hover{
         display:flex;
         flex-wrap:wrap;
     }
-
             #projects #projectArea .projectTab span{
                 margin:0 3px;
             }
-
-
-
 #footer{
     font-size:10px;
     text-align:center;
