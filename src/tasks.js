@@ -3,10 +3,11 @@ import {projectList} from './newProject.js';
 export function populateTasksArea(project){
     const tasksWrapper = document.getElementById("tasksWrapper");
         tasksWrapper.innerHTML = "";
+        tasksWrapper.style.cssText = "background-color:#000; color:#fff; margin:0 10px;";
     const flexBox = document.createElement("div");
         tasksWrapper.appendChild(flexBox);
         flexBox.setAttribute("id", "flexBox");
-        flexBox.style.cssText = "display:flex; flex-wrap:wrap;";
+        flexBox.style.cssText = "display:flex; flex-wrap:wrap; background:#fff;";
         const newTaskBtn = document.createElement('span');
             tasksWrapper.prepend(newTaskBtn);
             newTaskBtn.setAttribute('id', 'newTaskBtn');
@@ -20,6 +21,7 @@ export function populateTasksArea(project){
             tasksWrapper.prepend(projectNameTaskArea);
             projectNameTaskArea.textContent = `${project.name}'s tasks`;
             projectNameTaskArea.style.display = "inline-block";
+            projectNameTaskArea.style.margin = "10px";
     if (project.tasks.length > 0){
         for (let i = 0; i < project.tasks.length; i++){
             const taskBox = document.createElement('div');
@@ -74,6 +76,7 @@ export function populateTasksArea(project){
             taskPromptWrapper.style.cssText = "";
             flexBox.appendChild(taskPromptWrapper);
         const taskPromptText = document.createElement('p');
+            taskPromptText.style.cssText = "padding:10px; background-color:#fff; border:1px solid #000; box-shadow:4px 4px; margin:10px; color:#000; font-size:12px;";
             taskPromptText.textContent = `To add a task to this project, click the 'add task' text above!`;
             taskPromptWrapper.appendChild(taskPromptText);
     }

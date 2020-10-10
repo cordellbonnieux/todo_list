@@ -12,7 +12,9 @@ a:hover{
     color:#DB2B39;
 }
 #contentWrapper{
-
+    border:1px solid #000;
+    box-shadow:4px 4px;
+    padding:4px;
 }
     @media only screen and (min-width: 1200px)  {
         body{
@@ -51,9 +53,13 @@ a:hover{
 #projectsWrapper{
     padding:10px;
     color:#000;
+    background: #fff;
 }
-#projectTitleWrapper{
-
+#projectsTitleWrapper{
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    margin-bottom: 10px;
 }
     #projectsTitleWrapper div{
         display:inline-block;
