@@ -20,16 +20,21 @@ export function createAddProject(){
         newProjectWrapper.appendChild(projectName);
     const submit = document.createElement("input");
         submit.type = "submit";
-        submit.value = "Add New";
+        submit.value = "add project";
         submit.setAttribute('class', 'button');
         mouseHoverOverlay(submit);
         newProjectWrapper.appendChild(submit);
     overlayBox.appendChild(newProjectWrapper);
     // submit button / submit a new project name
     submit.addEventListener('click', function(){
+        if (projectName.value.length < 1 ){
+            alert("please enter a project name!")
+            return false;
+        }
         let createNewProject = newProject(projectName.value);
         projectList.push(createNewProject);
         projectsAreaUpdate();
+        populateTasksArea(createNewProject);
         overlayBox.innerHTML = "";
         overlay.style.display = "none";
         return
@@ -162,14 +167,19 @@ function editProjectName(project){
         wrapper.appendChild(enterName);
     const submitName = document.createElement("input");
         submitName.type = "submit";
-        submitName.value = "Add New";
+        submitName.value = "update project";
         submitName.setAttribute('class', 'button');
         mouseHoverOverlay(submitName);
         wrapper.appendChild(submitName);
         submitName.addEventListener('click', function(){
+            if (enterName.value.length < 1 ){
+                alert("please enter a new project name!")
+                return false;
+            }
             project.name = enterName.value;
             overlayBox.innerHTML = "";
             overlay.style.display = "none";
             projectsAreaUpdate();
+            populateTasksArea(project);
         })
 }

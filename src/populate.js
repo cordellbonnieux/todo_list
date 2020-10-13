@@ -24,7 +24,7 @@ export function populate(){
         projectsDescriptionWrapper.style.cssText = "padding:10px; background-color:#fff; border:1px solid #000; box-shadow:4px 4px; margin:10px; color:#000; font-size:12px;";
     const projectsDescription = document.createElement('p');
         projectsDescriptionWrapper.appendChild(projectsDescription);
-        projectsDescription.textContent = `To add a project, click the 'add project' text above!`;
+        projectsDescription.textContent = `To add a project, click the 'add' text above!`;
         
 };
 const projectsAreaDiv = document.getElementById('projectsArea');

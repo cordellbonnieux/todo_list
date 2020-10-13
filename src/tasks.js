@@ -11,7 +11,7 @@ export function populateTasksArea(project){
         const newTaskBtn = document.createElement('span');
             tasksWrapper.prepend(newTaskBtn);
             newTaskBtn.setAttribute('id', 'newTaskBtn');
-            newTaskBtn.textContent = "add task";
+            newTaskBtn.textContent = "add";
             newTaskBtn.addEventListener('click', function(){
                 createNewTask(project);
                 return
@@ -26,7 +26,7 @@ export function populateTasksArea(project){
         for (let i = 0; i < project.tasks.length; i++){
             const taskBox = document.createElement('div');
                 taskBox.setAttribute('class', 'task');
-                taskBox.style.cssText = "max-width: 300px; border:1px solid #000; padding:10px; background-color:#fff; box-shadow:4px 4px; margin:10px; color:#000;";
+                taskBox.style.cssText = "max-width: 300px; border:1px solid #000; padding:10px; background-color:#fff; box-shadow:4px 4px; margin:10px; color:#000; font-size:12px;";
                 flexBox.appendChild(taskBox);
             let title = document.createElement('h4');
                 title.textContent = project.tasks[i].title;
@@ -77,7 +77,7 @@ export function populateTasksArea(project){
             flexBox.appendChild(taskPromptWrapper);
         const taskPromptText = document.createElement('p');
             taskPromptText.style.cssText = "padding:10px; background-color:#fff; border:1px solid #000; box-shadow:4px 4px; margin:10px; color:#000; font-size:12px;";
-            taskPromptText.textContent = `To add a task to this project, click the 'add task' text above!`;
+            taskPromptText.textContent = `To add a task to this project, click the 'add' text above!`;
             taskPromptWrapper.appendChild(taskPromptText);
     }
     return
@@ -128,48 +128,55 @@ export function createNewTask(project){
     const taskPriorityLabel = document.createElement('p');
         taskPriorityLabel.textContent = "task priority";
         newTaskWrapper.appendChild(taskPriorityLabel);
+    // low priority
+    const lowLabel = document.createElement('span');
+            lowLabel.textContent = "low:";
     const taskPriorityLow = document.createElement('input');
         taskPriorityLow.type = "radio";
         taskPriorityLow.setAttribute('id', 'taskPriorityLow');
         taskPriorityLow.value = "low";
         taskPriorityLow.name = "priority";
-
-        const lowLabel = document.createElement('label');
-            lowLabel.for = "low";
-            lowLabel.textContent = "low:";
-        taskPriorityLow.prepend(lowLabel);
-
+        newTaskWrapper.appendChild(lowLabel);
         newTaskWrapper.appendChild(taskPriorityLow);
+    // medium priority
+    const mediumLabel = document.createElement('label');
+        mediumLabel.textContent = "medium:";
     const taskPriorityMedium = document.createElement('input');
         taskPriorityMedium.type = "radio";
         taskPriorityMedium.setAttribute('id', 'taskPriorityMedium');
         taskPriorityMedium.value = "medium";
         taskPriorityMedium.name = "priority";
-
-        const mediumLabel = document.createElement('label');
-            mediumLabel.for = "medium";
-            mediumLabel.textContent = "medium:";
-        taskPriorityMedium.prepend(mediumLabel);
-
+        newTaskWrapper.appendChild(mediumLabel);
         newTaskWrapper.appendChild(taskPriorityMedium);
+    // high priority
+    const highLabel = document.createElement('label');
+        highLabel.textContent = "high:";
     const taskPriorityHigh = document.createElement('input');
         taskPriorityHigh.type = "radio";
         taskPriorityHigh.setAttribute('id', 'taskPriorityHigh');
         taskPriorityHigh.value = "high";
         taskPriorityHigh.name = "priority";
-
-        const highLabel = document.createElement('label');
-            highLabel.for = "high";
-            highLabel.textContent = "high:";
-        taskPriorityHigh.prepend(highLabel);
-        
+        newTaskWrapper.appendChild(highLabel);
         newTaskWrapper.appendChild(taskPriorityHigh);
-
+    //
     const taskSubmit = document.createElement('input');
         taskSubmit.type = 'submit';
+        taskSubmit.value = "add task";
         newTaskWrapper.appendChild(taskSubmit);
         mouseHoverOverlay(taskSubmit);
         taskSubmit.addEventListener('click', function(){
+            if (taskTitle.value.length < 1 ){
+                alert("please enter a task name!")
+                return false;
+            }
+            if (taskDescription.value.length < 1 ){
+                alert("please enter a task description!")
+                return false;
+            }
+            if (!taskDueDate.value){
+                alert('please add a due date!')
+                return false;
+            }
             let taskPriority = "";
             if (taskPriorityLow.checked){
                 taskPriority = "low";
@@ -178,7 +185,8 @@ export function createNewTask(project){
             } else if (taskPriorityHigh.checked){
                 taskPriority = "high";
             } else {
-                console.log('no priority selected!');
+                alert('Please add a priority!');
+                return false;
             }
             let newTask = taskFactory(taskTitle.value,taskDescription.value,taskDueDate.value,taskPriority);
             project.tasks.push(newTask);
@@ -195,6 +203,7 @@ export function editSelectedTask(task, project){
     // create overlay menu
     const newTaskWrapper = document.createElement('div');
         newTaskWrapper.setAttribute('id', 'newTaskWrapper');
+        newTaskWrapper.style.fontSize = "12px";
         overlayBox.appendChild(newTaskWrapper);
         // make the input form then submit the data.
     const createANewTask = document.createElement('h3');
@@ -206,6 +215,7 @@ export function editSelectedTask(task, project){
         newTaskWrapper.appendChild(taskTitleLabel);
     const taskTitle = document.createElement('input');
         taskTitle.type = "text";
+        overlayInputFields(taskTitle);
         taskTitle.setAttribute('id', 'taskTitle');
         newTaskWrapper.appendChild(taskTitle);
     const taskDescriptionLabel = document.createElement('label');
@@ -214,6 +224,7 @@ export function editSelectedTask(task, project){
         newTaskWrapper.appendChild(taskDescriptionLabel);
     const taskDescription = document.createElement('input');
         taskDescription.type = "textarea";
+        overlayInputFields(taskDescription);
         taskDescription.setAttribute('id', 'taskDescription');
         newTaskWrapper.appendChild(taskDescription);
 
@@ -224,34 +235,61 @@ export function editSelectedTask(task, project){
     const taskDueDate = document.createElement('input');
         taskDueDate.setAttribute('id', 'taskDueDate');
         taskDueDate.type = "date";
+        overlayInputFields(taskDueDate);
+        taskDueDate.style.width = "auto";
         newTaskWrapper.appendChild(taskDueDate);
     const taskPriorityLabel = document.createElement('p');
         taskPriorityLabel.textContent = "task priority";
         newTaskWrapper.appendChild(taskPriorityLabel);
+    // low priority
+    const lowLabel = document.createElement('span');
+            lowLabel.textContent = "low:";
     const taskPriorityLow = document.createElement('input');
         taskPriorityLow.type = "radio";
         taskPriorityLow.setAttribute('id', 'taskPriorityLow');
         taskPriorityLow.value = "low";
         taskPriorityLow.name = "priority";
+        newTaskWrapper.appendChild(lowLabel);
         newTaskWrapper.appendChild(taskPriorityLow);
+    // medium priority
+    const mediumLabel = document.createElement('label');
+        mediumLabel.textContent = "medium:";
     const taskPriorityMedium = document.createElement('input');
         taskPriorityMedium.type = "radio";
         taskPriorityMedium.setAttribute('id', 'taskPriorityMedium');
         taskPriorityMedium.value = "medium";
         taskPriorityMedium.name = "priority";
+        newTaskWrapper.appendChild(mediumLabel);
         newTaskWrapper.appendChild(taskPriorityMedium);
+    // high priority
+    const highLabel = document.createElement('label');
+        highLabel.textContent = "high:";
     const taskPriorityHigh = document.createElement('input');
         taskPriorityHigh.type = "radio";
         taskPriorityHigh.setAttribute('id', 'taskPriorityHigh');
         taskPriorityHigh.value = "high";
         taskPriorityHigh.name = "priority";
+        newTaskWrapper.appendChild(highLabel);
         newTaskWrapper.appendChild(taskPriorityHigh);
-
+    //
     const taskSubmit = document.createElement('input');
         taskSubmit.type = 'submit';
+        taskSubmit.value = "update task"
         newTaskWrapper.appendChild(taskSubmit);
-
+        mouseHoverOverlay(taskSubmit);
         taskSubmit.addEventListener('click', function(){
+            if (taskTitle.value.length < 1 ){
+                alert("please enter a task name!")
+                return false;
+            }
+            if (taskDescription.value.length < 1 ){
+                alert("please enter a task description!")
+                return false;
+            }
+            if (!taskDueDate.value){
+                alert('please add a due date!')
+                return false;
+            }
             let taskPriority = "";
             if (taskPriorityLow.checked){
                 taskPriority = "low";
@@ -260,7 +298,8 @@ export function editSelectedTask(task, project){
             } else if (taskPriorityHigh.checked){
                 taskPriority = "high";
             } else {
-                console.log('no priority selected!');
+                alert('Please add a priority!');
+                return false;
             }
             task.title = taskTitle.value;
             task.description = taskDescription.value;
